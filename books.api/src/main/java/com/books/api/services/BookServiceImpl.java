@@ -74,11 +74,11 @@ public class BookServiceImpl implements BookService {
         if(file != null){
             Files.deleteIfExists(Paths.get(path+File.separator+bookCover));
             bookCover = fileService.uploadFile(path,file);
-            bookCoverUrl = baseUrl +"/api/v1/file"+bookCover;
-            bookDto.setBookCover(bookCover);
-            bookDto.setBookCoverUrl(bookCoverUrl);
+            bookCoverUrl = baseUrl +"/api/v1/file/"+bookCover;
 
         }
+        bookDto.setBookCover(bookCover);
+        bookDto.setBookCoverUrl(bookCoverUrl);
 
         book.setTitle(bookDto.getTitle());
         book.setAuthor(bookDto.getAuthor());

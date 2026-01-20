@@ -25,7 +25,7 @@ public class BookController {
     public ResponseEntity<BookDto> addBook(@RequestPart String bookDtoJson,
                                            @RequestPart(required = false)MultipartFile file) throws IOException{
 
-        if(file.isEmpty()) file=null;
+        if(file == null || file.isEmpty()) file=null;
         BookDto bookDto = getBookDto(bookDtoJson);
        BookDto bookDto1 = bookService.addBook(bookDto,file);
 
@@ -52,7 +52,7 @@ public class BookController {
     @PutMapping("/update-book/{isbn}")
     public ResponseEntity<BookDto> updateBook(@PathVariable Long isbn,@RequestPart BookDto bookDto, @RequestPart(required = false) MultipartFile file) throws IOException{
 
-        if (file.isEmpty())  file = null;
+        if (file == null || file.isEmpty())  file = null;
         BookDto updatedBookDto = bookService.updatBook(isbn,bookDto,file);
         return ResponseEntity.ok(updatedBookDto);
     }
