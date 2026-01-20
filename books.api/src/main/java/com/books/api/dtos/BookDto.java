@@ -2,7 +2,14 @@ package com.books.api.dtos;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
+import lombok.*;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@ToString
 public class BookDto {
 
 
@@ -25,5 +32,6 @@ public class BookDto {
     private Integer quantity;
 
     private String bookCover;
+
     private String bookCoverUrl;
 }
