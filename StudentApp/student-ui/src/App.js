@@ -6,6 +6,7 @@ import StudentView from './components/student/StudentView';
 import { BrowserRouter as Router,Routes, Route } from "react-router-dom";
 import NavBar from "./components/common/NavBar";
 import AddStudent from './components/student/AddStudent'
+import EditStudent from "./components/student/EditStudent";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route exact path="/" element={<Home/>}></Route>
           <Route exact path="/view-students" element={<StudentView/>}></Route>
           <Route exact path="/add-student" element={<AddStudent/>}></Route>
+          <Route exact path="/edit-student/:id" element={<EditStudent/>}></Route>
         </Routes>
       </Router>
       
