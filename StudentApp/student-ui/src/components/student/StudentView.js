@@ -61,7 +61,7 @@ const StudentView = () => {
                       <Link to={`/edit-student/${student.id}`} className='btn btn-warning'><FaEdit/></Link>
                     </td>
                     <td className='mx-2'>
-                      <button className='btn btn-danger' onClick={()=>handleDelete(student.id)}><FaTrashAlt/></button>
+                      <button className='btn btn-danger' onClick={(e)=>handleDelete(student.id)}><FaTrashAlt/></button>
                     </td>
                   </tr>
                   }) 
