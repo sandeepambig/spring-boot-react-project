@@ -21,14 +21,14 @@ const AddRoom = () => {
         let value = e.target.value ;
          
         if(name === "roomPrice"){
-            if(isNaN(value)){
-                value.parseInt(value);
+            if(!isNaN(value)){
+                value = parseInt(value);
             } else{
                 value = "";
             }
-        }
-
-        setNewRoom({...newRoom, [name] : value})
+          }
+        
+           setNewRoom({...newRoom, [name] : value})
     }
 
     const handleImageChange = (e) => {
@@ -43,25 +43,40 @@ const AddRoom = () => {
         try{
             const success =  await addRoom(newRoom.photo,newRoom.roomType,newRoom.roomPrice)
             if(success !== undefined){
-                setSuccessMessage("A new room addedto the database");
+                setSuccessMessage("A new room added to the database");
                 setNewRoom({photo:null, roomType:"", roomPrice: ""});
                 setImagePreview("");
                 setErrorMessage("");
+
             } else {
+                
                 setErrorMessage("Error adding room");
             }
         } catch(error){
+           
             setErrorMessage(error.message)
         }
+
+        setTimeout(()=>{
+                 
+              setSuccessMessage("");
+              setErrorMessage("");
+        },3000)
     }
   return (
     
     <> 
-       <section className='container mt-5 mb-5'>
+       <section className='container  mt-10 mb-5'>
           <div className='row justify-content-center'>
             <div className='col-md-8 col-lg-6'>
-                <h2 className='mt-5 mb-2'>Add a New Room</h2>
-
+                <h2 className='mt-5 mb-2 '>Add a New Room</h2>
+              
+                { successMessage && (
+                    <div className='alert alert-success fade show'>{successMessage}</div>
+                )}
+                { errorMessage && (
+                    <div className='alert alert-danger fade show'>{errorMessage}</div>
+                )}
                 <form onSubmit={(e)=>handleSubmit(e)}>
                    <div className='mb-3'>
                       <label htmlFor='roomType' className='form-label'>
@@ -78,13 +93,14 @@ const AddRoom = () => {
                       <label htmlFor='roomPrice' className='form-label'>
                           Room Price
                       </label>
-                      <input className='form-control' 
-                             id='roomPrice'
+                      <input required
+                             className='form-control' 
                              name='roomPrice'
-                             type='number'
-                             value={newRoom.roomPrice}
-                             onChange={(e)=>handleRoomInputChange(e)}
-                             required/>
+                             id='roomPrice'
+                             type= "number"
+                             value={newRoom.roomPrice} 
+                             onChange={handleRoomInputChange}
+                            />
                    </div>
                    <div className='mb-3'>
                       <label htmlFor='photo' className='form-label'>
@@ -105,7 +121,7 @@ const AddRoom = () => {
                       )}
                    </div>
                    <div className='d-grid d-md-flex mt-2'>
-                      <button className='btn btn-outline-primary ml-5'>
+                      <button type='submit' className='btn btn-outline-primary ml-5'>
                           Save Room
                       </button>
                    </div>
