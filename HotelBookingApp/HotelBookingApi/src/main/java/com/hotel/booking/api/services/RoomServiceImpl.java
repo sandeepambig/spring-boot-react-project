@@ -1,6 +1,7 @@
 package com.hotel.booking.api.services;
 
 import com.hotel.booking.api.entities.Room;
+import com.hotel.booking.api.exception.InternalServerException;
 import com.hotel.booking.api.exception.ResourceNotFoundException;
 import com.hotel.booking.api.repositories.RoomRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,8 @@ import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
+
 import com.hotel.booking.api.exception.ResourceNotFoundException;
 
 @Service
@@ -60,6 +63,40 @@ public class RoomServiceImpl implements IRoomService{
        }
 
        return null;
+    }
+
+    @Override
+    public void deleteRoom(Long roomId) {
+
+       Optional<Room> room = roomRepository.findById(roomId);
+       if(room.isPresent()) {
+           roomRepository.deleteById(roomId);
+       }
+    }
+
+    @Override
+    public Room updateRoom(Long roomId, String roomType, BigDecimal roomPrice, byte[] photoBytes) {
+
+       Room room = roomRepository.findById(roomId).orElseThrow(()-> new ResourceNotFoundException("Room not Found"));
+
+       if(roomType != null) room.setRoomType(roomType);
+       if (roomPrice != null) room.setRoomPrice(roomPrice);
+       try {
+           if (photoBytes != null && photoBytes.length > 0) {
+               room.setPhoto(new SerialBlob(photoBytes));
+           }
+       } catch(SQLException e){
+             throw new InternalServerException("Error updating room");
+       }
+
+        return roomRepository.save(room);
+    }
+
+    @Override
+    public Optional<Room> getRoomById(Long roomId) {
+
+
+        return Optional.of(roomRepository.findById(roomId).get());
     }
 
 
