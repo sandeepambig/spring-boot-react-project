@@ -26,12 +26,13 @@ public class BookingController {
     private final IBookingService bookingService;
     private final IRoomService roomService;
 
+    @GetMapping("/all-bookings")
     public ResponseEntity<List<BookingResponse>> getAllBookings (){
 
         List<BookedRoom> bookings = bookingService.getAllBookings();
         List<BookingResponse> bookingResponses = new ArrayList<>();
         for(BookedRoom room: bookings){
-            BookingResponse bookingResponse = getBookingResponse(booking);
+            BookingResponse bookingResponse = getBookingResponse(room);
             bookingResponses.add(bookingResponse);
         }
 
@@ -80,6 +81,5 @@ public class BookingController {
                                    booking.getNumOfChildren(),booking.getTotalNumberOfGuest(),
                                    booking.getBookingConfirmationCode(), room);
 
-                                   );
     }
 }
