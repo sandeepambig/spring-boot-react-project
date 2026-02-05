@@ -4,16 +4,19 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.UUID;
+
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString
 public class BookedRoom {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long bookingId ;
 
     @Column(name = "check_in")
@@ -41,7 +44,7 @@ public class BookedRoom {
     private String bookingConfirmationCode;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "room_is")
+    @JoinColumn(name = "room_id")
     private Room room;
 
     public void calculateTotalNumberOfGuest(){
@@ -58,7 +61,5 @@ public class BookedRoom {
         calculateTotalNumberOfGuest();
     }
 
-    public void setBookingConfirmationCode(String bookingConfirmationCode) {
-        this.bookingConfirmationCode = bookingConfirmationCode;
-    }
+
 }

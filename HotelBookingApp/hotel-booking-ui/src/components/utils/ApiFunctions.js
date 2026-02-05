@@ -84,7 +84,7 @@ export async function bookRoom(roomId, booking){
         if(error.response && error.response.data){
             throw new Error(error.response.data);
         } else{
-            throw new Error(`Error booking room : ${error.message}`)
+            throw new Error(`Error booking room now : ${error.message}`)
         }
     }
 }
@@ -119,7 +119,7 @@ export async function cancelBooking(bookingId){
     try{
          const result = await api.delete(`/bookings/booking/${bookingId}/delete`);
          return result.data ;
-    } catch(error){     
+    } catch(error){      
 
             throw new Error(`Error cancelling booking : ${error.message}`)
      }  

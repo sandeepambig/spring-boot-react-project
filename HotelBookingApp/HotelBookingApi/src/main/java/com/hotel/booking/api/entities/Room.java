@@ -2,6 +2,7 @@ package com.hotel.booking.api.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import java.math.BigDecimal;
 import java.sql.Blob;
@@ -41,8 +42,8 @@ public class Room {
         }
         bookings.add(booking);
         booking.setRoom(this);
-        isBooked = true;
-        String bookingCode = UUID.randomUUID().toString();
+        this.isBooked = true;
+        String bookingCode =  RandomStringUtils.randomNumeric(10);
         booking.setBookingConfirmationCode(bookingCode);
     }
 }
